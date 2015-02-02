@@ -1,0 +1,42 @@
+<div app-lifegame>
+	<div class="controlArea">
+		<div ng-repeat="type in Species" class="typeButtons">
+			<button ng-click="AddAnimal(type.Name,0,0,true,false)">Add {{type.Name}}</button>
+			<button>Edit</button> <span>{{type.Population}}</span>
+		</div>
+	<div>
+
+	<button class="pauseButton" ng-click="TogglePause();">Pause</button>
+
+</div>
+
+<!--<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tbody>
+		<tr>
+			<td colspan="2"><p>Click the add buttons for the different life forms to add one to the game area.  They start very small so it takes a minute or so before you can see the plants or bugs. The bugs eat the plants and the fish eat the bugs. The plants will spread and the bugs and fish will reproduce as they eat.</p></td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<table border="0" cellpadding="0" cellspacing="0" width="100%">
+					<tbody>
+						<tr>
+							<td class="controlCell"></td>
+						</tr>
+						<tr>
+							<td><button class="pauseButton" onclick="TogglePause();">Pause</button></td>
+						</tr>
+						<tr>
+							<td class="timeCell">0</td>
+						</tr>		
+					</tbody>
+				</table>
+			</td>
+			<td>
+				<input type="text" name="GameBG" class="gameBG" value="/life/game_bg.jpg" /> <button onclick="GameArea.style.backgroundImage = 'url(' + document.getElementById('GameBG').value + ')';">Set Background</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" valign="top"><div class="gameArea" style="position:relative; height:600px; width:600px; border:1px solid #000; overflow:hidden;"></div></td>
+		</tr>
+	</tbody>
+</table>-->

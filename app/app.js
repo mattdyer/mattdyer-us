@@ -6,6 +6,8 @@ angular.module('myApp', [
   'myApp.home',
   'myApp.about',
   'myApp.projects',
+  'myApp.projects.life',
+  'myApp.projects.life.lifegame',
   'myApp.version',
   'myApp.copyrightyear'
 ]).
