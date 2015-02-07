@@ -2,7 +2,7 @@
 	<div class="controlArea">
 		<div ng-repeat="type in Species" class="typeButtons">
 			<button ng-click="AddAnimal(type.Name,0,0,true,false)">Add {{type.Name}}</button>
-			<button>Edit</button> <span>{{type.Population}}</span>
+			<button ng-click="EditType(type.Name)">Edit</button> <span>{{type.Population}}</span>
 		</div>
 	<div>
 

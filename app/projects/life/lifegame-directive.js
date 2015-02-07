@@ -2,7 +2,8 @@
 
 angular.module('myApp.projects.life.lifegame-directive', [])
 
-.directive('appLifegame', [function() {
+.directive('appLifegame', ['$timeout',function($timeout) {
+  console.log($timeout);
   return function(scope, elm, attrs) {
     var GameArea = angular.element('<div class="gameArea"></div>');
     var editingAnimal = 0;
@@ -91,24 +92,11 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 	Species['Fish'] = Fish;
 	Species['Plant'] = Plant;
 
-	/*var ControlArea = angular.element('<div class="controlArea"></div>')
-	ControlArea.html('');
-	console.log(ControlArea);
-	for(var Type in Species){
-		console.log(Type);
-
-		ControlArea.html(ControlArea.html() + '<div><button ng-click="AddAnimal(\'' + Type + '\',0,0,true,false)">Add ' + Type + '</button> <button ng-click="EditType(\'' + Type + '\');">Edit ' + Type + '</button> <span id="' + Type + 'Count">0</span></div>');
-	}
-
-	var PauseButton = angular.element('<button class="pauseButton" onclick="TogglePause();">Pause</button>');*/
-
-	//elm.append(ControlArea);
-	//elm.append(PauseButton);
 	elm.append(GameArea);
 
 	var AnimalInfo = new Object();
 
-	Object.find = function(ary, element){
+	var find = function(ary, element){
 		for(var i=0; i<ary.length; i++){
 			if(ary[i] == element){
 				return true;
@@ -116,27 +104,6 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 		}
 		return false;
 	}
-
-	Object.filter = function(fun , thisp)
-	  {
-		var len = this.length;
-		if (typeof fun != "function")
-		  throw new TypeError();
-
-		var res = new Object();
-		var thisp = arguments[1];
-		for (var i = 0; i < len; i++)
-		{
-		  if (i in this)
-		  {
-			var val = this[i]; // in case fun mutates this
-			if (fun.call(thisp, val, i, this))
-			  res.push(val);
-		  }
-		}
-
-		return res;
-	  };
 
 	var TogglePause = function(){
 		if(Paused){
@@ -149,15 +116,15 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 	}
 
 
-	function EditType(Type){
+	var EditType = function(Type){
 		
-		EditForm = document.getElementById('SpeciesEditForm');
+		var EditForm = document.getElementById('SpeciesEditForm');
 		if(EditForm){
 			EditForm.parentNode.removeChild(EditForm);
 		}
 		
 		var SpeciesEdit = document.createElement('div');
-		GameArea.appendChild(SpeciesEdit);
+		GameArea.append(SpeciesEdit);
 		SpeciesEdit.id = 'SpeciesEditForm';
 		SpeciesEdit.style.position = 'absolute';
 		SpeciesEdit.style.top = '4px';
@@ -166,7 +133,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 		SpeciesEdit.style.backgroundColor = 'white';
 		SpeciesEdit.style.padding = '4px';
 		SpeciesEdit.style.border = '1px solid black';
-		for(property in Species[Type]){
+		for(var property in Species[Type]){
 			if(typeof Species[Type][property] == 'number' | typeof Species[Type][property] == 'string' | typeof Species[Type][property] == 'object'){
 				var nextLabel = document.createElement('span');
 				nextLabel.innerHTML = property + ':';
@@ -179,7 +146,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 					nextInput.value = Species[Type][property];
 				}
 				if(typeof Species[Type][property] == 'object'){
-					for(thing in Species[Type][property]){
+					for(var thing in Species[Type][property]){
 						nextInput.value += Species[Type][property][thing];
 						if(thing + 1 < Species[Type][property].length){
 							nextInput.value += ',';
@@ -192,7 +159,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 			}
 		}
 		
-		editingType = Type;
+		scope.editingType = Type;
 		
 		var nextInput = document.createElement('input');
 		nextInput.type = 'button';
@@ -204,23 +171,23 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 	}
 
 	function FinishEditingType(){
-		for(property in Species[editingType]){
-			if(typeof Species[editingType][property] == 'number' | typeof Species[Type][property] == 'string' | typeof Species[Type][property] == 'object'){
+		for(var property in Species[scope.editingType]){
+			if(typeof Species[scope.editingType][property] == 'number' | typeof Species[scope.editingType][property] == 'string' | typeof Species[scope.editingType][property] == 'object'){
 				var inputField = document.getElementById(property);
 				
-				if(typeof Species[Type][property] == 'string'){
-					Species[editingType][property] = inputField.value;
+				if(typeof Species[scope.editingType][property] == 'string'){
+					Species[scope.editingType][property] = inputField.value;
 				}
-				if(typeof Species[Type][property] == 'number'){
-					Species[editingType][property] = inputField.value * 1;
+				if(typeof Species[scope.editingType][property] == 'number'){
+					Species[scope.editingType][property] = inputField.value * 1;
 				}
-				if(typeof Species[Type][property] == 'object'){
-					Species[editingType][property] = inputField.value.split(',');
+				if(typeof Species[scope.editingType][property] == 'object'){
+					Species[scope.editingType][property] = inputField.value.split(',');
 				}
 			}
 		}
 		
-		EditForm = document.getElementById('SpeciesEditForm');
+		var EditForm = document.getElementById('SpeciesEditForm');
 		EditForm.parentNode.removeChild(EditForm);
 	}
 
@@ -398,7 +365,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 						for(var AnimalIDs in AnimalInfo){
 							var ThisFood = AnimalInfo[AnimalIDs];
 							var ThisFoodArea = ThisFood['Height'] * ThisFood['Width'];
-							if(Object.find(ThisSpeciesInfo['FoodType'],ThisFood['Type']) && ThisAnimalArea > ThisFoodArea && AnimalIDs != ThisAnimal.id){
+							if(find(ThisSpeciesInfo['FoodType'],ThisFood['Type']) && ThisAnimalArea > ThisFoodArea && AnimalIDs != ThisAnimal.id){
 								var FoodDistance = Math.sqrt(Math.pow(ThisAnimalInfo['Left']-ThisFood['Left'],2) + Math.pow(ThisAnimalInfo['Top']-ThisFood['Top'],2));
 								if (FoodDistance < ClosestFoodDistance){
 									ClosestFoodDistance = FoodDistance;
@@ -413,7 +380,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 						for(var AnimalIDs in AnimalInfo){
 							var ThisPredator = AnimalInfo[AnimalIDs];
 							var ThisPredatorArea = ThisPredator['Height'] * ThisPredator['Width'];
-							if(Object.find(ThisSpeciesInfo['PredatorType'],ThisPredator['Type']) && ThisPredatorArea > ThisAnimalArea && !ThisPredator['Dead'] && AnimalIDs != ThisAnimal.id){
+							if(find(ThisSpeciesInfo['PredatorType'],ThisPredator['Type']) && ThisPredatorArea > ThisAnimalArea && !ThisPredator['Dead'] && AnimalIDs != ThisAnimal.id){
 								var PredatorDistance = Math.sqrt(Math.pow(ThisAnimalInfo['Left']-ThisPredator['Left'],2) + Math.pow(ThisAnimalInfo['Top']-ThisPredator['Top'],2));
 								if (PredatorDistance < ClosestPredatorDistance){
 									ClosestPredatorDistance = PredatorDistance;
@@ -503,16 +470,21 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 						
 					}
 					
-					AnimalInfo.Timeout = setTimeout(function(){MoveAnimal(ThisAnimal,ThisAnimalImage);},100);
+					AnimalInfo.Timeout = $timeout(function(){
+						MoveAnimal(ThisAnimal,ThisAnimalImage);
+					},100);
 				}
 				else
 				{
 					ThisAnimal['Life'] = ThisSpeciesInfo['DeadLife'];
-					AnimalInfo.DeadTimeout = setTimeout('RemoveAnimal(\'' + ThisAnimal.id + '\')',20000);
+					AnimalInfo.DeadTimeout = $timeout(function(){
+						RemoveAnimal(ThisAnimal.id);
+					},20000);
+					//AnimalInfo.DeadTimeout = $timeout('RemoveAnimal(\'' + ThisAnimal.id + '\')',20000);
 				}
 			}
 		}else{
-			AnimalInfo.PauseTimeout = setTimeout(function(){MoveAnimal(ThisAnimal,ThisAnimalImage);},1000);
+			AnimalInfo.PauseTimeout = $timeout(function(){MoveAnimal(ThisAnimal,ThisAnimalImage);},1000);
 		}
 	}
 
@@ -520,15 +492,15 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 		
 		var ThisAnimalInfo = AnimalInfo[AnimalID];
 		var Type = ThisAnimalInfo['Type'];
-		document.getElementById(Type + 'Count').innerHTML--;
+		scope.Species[Type].Population--;
 		delete AnimalInfo[AnimalID];
 		var ThisAnimal = document.getElementById(AnimalID);
-		GameArea.removeChild(ThisAnimal);
+		angular.element(ThisAnimal).remove();
 	}
 
 	function showAnimalInfo(){
 		
-			EditForm = document.getElementById('SpeciesEditForm');
+			var EditForm = document.getElementById('SpeciesEditForm');
 			if(EditForm){
 				EditForm.parentNode.removeChild(EditForm);
 			}
@@ -540,7 +512,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 			this.style.border = '1px solid red';
 			
 			var AnimalEdit = document.createElement('div');
-			GameArea.appendChild(AnimalEdit);
+			GameArea.append(AnimalEdit);
 			AnimalEdit.id = 'SpeciesEditForm';
 			AnimalEdit.style.position = 'absolute';
 			AnimalEdit.style.top = '4px';
@@ -549,7 +521,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 			AnimalEdit.style.backgroundColor = 'white';
 			AnimalEdit.style.padding = '4px';
 			AnimalEdit.style.border = '1px solid black';
-			for(property in AnimalInfo[this.id]){
+			for(var property in AnimalInfo[this.id]){
 				if(typeof AnimalInfo[this.id][property] == 'number'){
 					var nextLabel = document.createElement('span');
 					nextLabel.innerHTML = property + ':';
@@ -578,7 +550,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 
 	function FinishEditingAnimal(){
 		
-		for(property in AnimalInfo[editingAnimal]){
+		for(var property in AnimalInfo[editingAnimal]){
 			if(typeof AnimalInfo[editingAnimal][property] == 'number'){
 				var inputField = document.getElementById(property);
 				AnimalInfo[editingAnimal][property] = inputField.value * 1;
@@ -586,13 +558,14 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 		}
 		
 		document.getElementById(editingAnimal).style.border = 'none';
-		EditForm = document.getElementById('SpeciesEditForm');
+		var EditForm = document.getElementById('SpeciesEditForm');
 		EditForm.parentNode.removeChild(EditForm);
 		editingAnimal = 0;
 	}
 
 	scope.AddAnimal = AddAnimal;
 	scope.TogglePause = TogglePause;
+	scope.EditType = EditType;
 
   };
 }]);

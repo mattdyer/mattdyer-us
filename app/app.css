@@ -1,32 +1,71 @@
 /* app css stylesheet */
 
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  padding:0 20px;
+}
+
+a{
+  color:#AA0000;
+  text-decoration: none;
+}
+a:visited{
+  color:#660000;
+}
+a:hover{
+  color:#6600FF;
+}
+
+h1{
+  background-color: #DDDDDD;
+  padding: 0px 10px;
+  color:#008888;
+  text-align: center;
+  border-radius: 40px 40px 0px 0px;
+  border: 1px solid #CCCCCC;
+}
+
 .menu {
   list-style: none;
-  border-bottom: 0.1em solid black;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
 }
 
 .menu:before {
-  content: "[";
+  
 }
 
 .menu:after {
-  content: "]";
+  
 }
 
 .menu > li {
   display: inline;
+  padding: 5px;
+  margin: 3px;
+  background-color: #CCCCCC;
+  border-radius: 3px;
+  border: 2px solid #CCCCCC;
+}
+
+.menu > li:hover{
+  border-color:#999999;
 }
 
 .menu > li:before {
-  content: "|";
   padding-right: 0.3em;
 }
 
 .menu > li:nth-child(1):before {
-  content: "";
   padding: 0;
+}
+
+.footer{
+  border: 1px solid #CCCCCC;
+  border-radius: 0px 0px 40px 40px;
+  background-color: #DDDDDD;
+  text-align: center;
+  height: 50px;
 }
 
 .gameArea{
