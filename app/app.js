@@ -8,6 +8,8 @@ angular.module('myApp', [
   'myApp.projects',
   'myApp.projects.life',
   'myApp.projects.life.lifegame',
+  'myApp.projects.fish',
+  'myApp.projects.fish.fishgame',
   'myApp.version',
   'myApp.copyrightyear'
 ]).

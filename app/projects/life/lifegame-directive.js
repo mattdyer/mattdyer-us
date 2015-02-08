@@ -3,7 +3,6 @@
 angular.module('myApp.projects.life.lifegame-directive', [])
 
 .directive('appLifegame', ['$timeout',function($timeout) {
-  console.log($timeout);
   return function(scope, elm, attrs) {
     var GameArea = angular.element('<div class="gameArea"></div>');
     var editingAnimal = 0;
