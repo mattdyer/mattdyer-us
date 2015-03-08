@@ -4,7 +4,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 
 .directive('appLifegame', ['$timeout',function($timeout) {
   return function(scope, elm, attrs) {
-    var GameArea = angular.element('<div class="gameArea"></div>');
+    //var GameArea = angular.element('<div class="gameArea"></div>');
     var editingAnimal = 0;
     var NextDivID = 1;
 	var GameHeight = 600;
@@ -91,7 +91,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 	Species['Fish'] = Fish;
 	Species['Plant'] = Plant;
 
-	elm.append(GameArea);
+	//elm.append(GameArea);
 
 	var AnimalInfo = new Object();
 
@@ -192,8 +192,8 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 
 	var AddAnimal = function(Type,Top,Left,RandomPosition,HasParent,ParentID){
 		scope.Species[Type].Population++;
-		var NewAnimal = document.createElement('div');
-		var NewAnimalLife = document.createElement('div');
+		//var NewAnimal = document.createElement('div');
+		//var NewAnimalLife = document.createElement('div');
 		var ThisSpecies = Species[Type];
 		
 		if(HasParent)
@@ -210,23 +210,23 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 		var NewAnimalID = NextDivID;
 		NextDivID++;
 		
-		NewAnimal.id = Type + NewAnimalID;
-		NewAnimal.style.height = ThisSpecies['Height'] + 'px';
-		NewAnimal.style.width = ThisSpecies['Width'] + 'px';
-		NewAnimal.style.position = 'absolute';
-		NewAnimal.style.top = Top + 'px';
-		NewAnimal.style.left = Left + 'px';
+		//NewAnimal.id = Type + NewAnimalID;
+		//NewAnimal.style.height = ThisSpecies['Height'] + 'px';
+		//NewAnimal.style.width = ThisSpecies['Width'] + 'px';
+		//NewAnimal.style.position = 'absolute';
+		//NewAnimal.style.top = Top + 'px';
+		//NewAnimal.style.left = Left + 'px';
 		if(RandomPosition)
 		{
 			var RandomTop = Math.floor(Math.random() * GameHeight);
 			var RandomLeft = Math.floor(Math.random() * GameWidth);
 			
-			NewAnimal.style.top = RandomTop + 'px';
-			NewAnimal.style.left = RandomLeft + 'px';
+			//NewAnimal.style.top = RandomTop + 'px';
+			//NewAnimal.style.left = RandomLeft + 'px';
 		}
-		NewAnimal.innerHTML = '<img src="' + imageLocation + ThisSpecies['ImagePath'] + '" id="' + Type + NewAnimalID + 'Image" border="0" alt="' + ThisSpecies['ImagePath'] + '" style="width:' + ThisSpecies['Width'] + 'px; height:' + ThisSpecies['Height'] + 'px;">';
-		NewAnimal.onclick = showAnimalInfo;
-		GameArea.append(NewAnimal);
+		//NewAnimal.innerHTML = '<img src="' + imageLocation + ThisSpecies['ImagePath'] + '" id="' + Type + NewAnimalID + 'Image" border="0" alt="' + ThisSpecies['ImagePath'] + '" style="width:' + ThisSpecies['Width'] + 'px; height:' + ThisSpecies['Height'] + 'px;">';
+		//NewAnimal.onclick = showAnimalInfo;
+		//GameArea.append(NewAnimal);
 		var NewAnimalInfo = new Object();
 		NewAnimalInfo['ID'] = Type + NewAnimalID;
 		NewAnimalInfo['Type'] = Type;
@@ -247,13 +247,11 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 		NewAnimalInfo['Dead'] = false;
 		NewAnimalInfo['LeftMultiplier'] = Math.floor(Math.random() * 3) - 1;
 		NewAnimalInfo['TopMultiplier'] = Math.floor(Math.random() * 3) - 1;
+		NewAnimalInfo['imageSrc'] = imageLocation + ThisSpecies['ImagePath'];
 		AnimalInfo[Type + NewAnimalID] = NewAnimalInfo;
 		
 		
-		
-		var AnimalImage = document.getElementById(Type + NewAnimalID + 'Image');
-		
-		MoveAnimal(NewAnimal,AnimalImage);
+		MoveAnimal(NewAnimalInfo);
 	}
 
 	function calculateRotation(newLeft,oldLeft,newTop,oldTop,Adjustment){
@@ -282,13 +280,13 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 		return NewRotation + Adjustment;
 	}
 
-	function MoveAnimal(ThisAnimal,ThisAnimalImage){
+	function MoveAnimal(ThisAnimalInfo){
 		
 		if(!Paused){
 			//TimeCell.innerHTML++;
-			if(AnimalInfo[ThisAnimal.id])
+			if(ThisAnimalInfo)
 			{
-				var ThisAnimalInfo = AnimalInfo[ThisAnimal.id];
+				//var ThisAnimalInfo = AnimalInfo[ThisAnimal.id];
 				var ThisSpeciesInfo = Species[ThisAnimalInfo['Type']];
 				var ThisAnimalArea = ThisAnimalInfo['Height'] * ThisAnimalInfo['Width'];
 				
@@ -310,16 +308,16 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 				if(ThisAnimalInfo['Height'] < ThisSpeciesInfo['AdultHeight'])
 				{
 					ThisAnimalInfo['Height']+=ThisAnimalInfo['GrowthRate'];
-					ThisAnimal.style.height = ThisAnimalInfo['Height'] + 'px';
-					ThisAnimalImage.style.height = ThisAnimalInfo['Height'] + 'px';
+					//ThisAnimal.style.height = ThisAnimalInfo['Height'] + 'px';
+					//ThisAnimalImage.style.height = ThisAnimalInfo['Height'] + 'px';
 				}
 				
 				if(ThisAnimalInfo['Width'] < ThisSpeciesInfo['AdultWidth'])
 				{
 					ThisAnimalInfo['Width']+=ThisAnimalInfo['GrowthRate'];
-					ThisAnimal.style.width = ThisAnimalInfo['Width'] + 'px';
-					ThisAnimalImage.style.width = ThisAnimalInfo['Width'] + 'px';
-					ThisAnimal.style.zIndex =  Math.round(ThisAnimalInfo['Width']);
+					//ThisAnimal.style.width = ThisAnimalInfo['Width'] + 'px';
+					//ThisAnimalImage.style.width = ThisAnimalInfo['Width'] + 'px';
+					//ThisAnimal.style.zIndex =  Math.round(ThisAnimalInfo['Width']);
 				}
 				
 				
@@ -354,7 +352,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 						{
 							ReproduceTop = GameHeight + ReproduceTop;
 						}
-						AddAnimal(ReproduceType,ReproduceTop,ReproduceLeft,false,true,ThisAnimal.id);
+						AddAnimal(ReproduceType,ReproduceTop,ReproduceLeft,false,true,ThisAnimalInfo.ID);
 					}
 					
 					if(ThisAnimalInfo['Speed'] > 0 || ThisAnimalInfo['BurstSpeed'] > 0){
@@ -364,7 +362,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 						for(var AnimalIDs in AnimalInfo){
 							var ThisFood = AnimalInfo[AnimalIDs];
 							var ThisFoodArea = ThisFood['Height'] * ThisFood['Width'];
-							if(find(ThisSpeciesInfo['FoodType'],ThisFood['Type']) && ThisAnimalArea > ThisFoodArea && AnimalIDs != ThisAnimal.id){
+							if(find(ThisSpeciesInfo['FoodType'],ThisFood['Type']) && ThisAnimalArea > ThisFoodArea && AnimalIDs != ThisAnimalInfo.ID){
 								var FoodDistance = Math.sqrt(Math.pow(ThisAnimalInfo['Left']-ThisFood['Left'],2) + Math.pow(ThisAnimalInfo['Top']-ThisFood['Top'],2));
 								if (FoodDistance < ClosestFoodDistance){
 									ClosestFoodDistance = FoodDistance;
@@ -379,7 +377,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 						for(var AnimalIDs in AnimalInfo){
 							var ThisPredator = AnimalInfo[AnimalIDs];
 							var ThisPredatorArea = ThisPredator['Height'] * ThisPredator['Width'];
-							if(find(ThisSpeciesInfo['PredatorType'],ThisPredator['Type']) && ThisPredatorArea > ThisAnimalArea && !ThisPredator['Dead'] && AnimalIDs != ThisAnimal.id){
+							if(find(ThisSpeciesInfo['PredatorType'],ThisPredator['Type']) && ThisPredatorArea > ThisAnimalArea && !ThisPredator['Dead'] && AnimalIDs != ThisAnimalInfo.ID){
 								var PredatorDistance = Math.sqrt(Math.pow(ThisAnimalInfo['Left']-ThisPredator['Left'],2) + Math.pow(ThisAnimalInfo['Top']-ThisPredator['Top'],2));
 								if (PredatorDistance < ClosestPredatorDistance){
 									ClosestPredatorDistance = PredatorDistance;
@@ -409,7 +407,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 								var ClosestFoodSpeciesInfo = Species[ClosestFoodInfo['Type']];
 								ThisAnimalInfo['Life']+=ClosestFoodInfo['Life'];
 								ClosestFoodInfo['Dead'] = true;
-								RemoveAnimal(ClosestFoodID);
+								RemoveAnimal(ClosestFoodInfo);
 							}
 						
 						
@@ -457,44 +455,45 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 							NewTop = NewTop - GameHeight;
 						}
 						
-						var NewRotation = calculateRotation(NewLeft,AnimalInfo[ThisAnimal.id]['Left'],NewTop,AnimalInfo[ThisAnimal.id]['Top'],ThisSpeciesInfo['RotationAdjustment'])//Math.tan(Math.abs(NewTop - AnimalInfo[ThisAnimal.id]['Top']) / Math.abs(NewLeft - AnimalInfo[ThisAnimal.id]['Left']));
+						var NewRotation = calculateRotation(NewLeft,ThisAnimalInfo['Left'],NewTop,ThisAnimalInfo['Top'],ThisSpeciesInfo['RotationAdjustment'])//Math.tan(Math.abs(NewTop - AnimalInfo[ThisAnimal.id]['Top']) / Math.abs(NewLeft - AnimalInfo[ThisAnimal.id]['Left']));
 						
-						ThisAnimalImage.style.MozTransform = 'rotate(' + NewRotation + 'deg)';
-						ThisAnimalImage.style.WebkitTransform = 'rotate(' + NewRotation + 'deg)';
+						//ThisAnimalImage.style.MozTransform = 'rotate(' + NewRotation + 'deg)';
+						//ThisAnimalImage.style.WebkitTransform = 'rotate(' + NewRotation + 'deg)';
 						
-						ThisAnimal.style.left = NewLeft + 'px';
-						AnimalInfo[ThisAnimal.id]['Left'] = NewLeft;
-						ThisAnimal.style.top = NewTop + 'px';
-						AnimalInfo[ThisAnimal.id]['Top'] = NewTop;
+						//ThisAnimal.style.left = NewLeft + 'px';
+						ThisAnimalInfo['Left'] = NewLeft;
+						//ThisAnimal.style.top = NewTop + 'px';
+						ThisAnimalInfo['Top'] = NewTop;
 						
 					}
 					
-					AnimalInfo.Timeout = $timeout(function(){
-						MoveAnimal(ThisAnimal,ThisAnimalImage);
+					$timeout(function(){
+						MoveAnimal(ThisAnimalInfo);
 					},100);
-				}
-				else
-				{
-					ThisAnimal['Life'] = ThisSpeciesInfo['DeadLife'];
-					AnimalInfo.DeadTimeout = $timeout(function(){
-						RemoveAnimal(ThisAnimal.id);
+				}else{
+					ThisAnimalInfo['Life'] = ThisSpeciesInfo['DeadLife'];
+					$timeout(function(){
+						RemoveAnimal(ThisAnimalInfo);
 					},20000);
-					//AnimalInfo.DeadTimeout = $timeout('RemoveAnimal(\'' + ThisAnimal.id + '\')',20000);
 				}
 			}
 		}else{
-			AnimalInfo.PauseTimeout = $timeout(function(){MoveAnimal(ThisAnimal,ThisAnimalImage);},1000);
+			$timeout(function(){MoveAnimal(ThisAnimalInfo);},1000);
 		}
 	}
 
-	function RemoveAnimal(AnimalID){
+	function RemoveAnimal(ThisAnimalInfo){
 		
-		var ThisAnimalInfo = AnimalInfo[AnimalID];
-		var Type = ThisAnimalInfo['Type'];
-		scope.Species[Type].Population--;
-		delete AnimalInfo[AnimalID];
-		var ThisAnimal = document.getElementById(AnimalID);
-		angular.element(ThisAnimal).remove();
+		console.log(ThisAnimalInfo);
+
+		//var ThisAnimalInfo = AnimalInfo[AnimalID];
+		if(ThisAnimalInfo){
+			var Type = ThisAnimalInfo['Type'];
+			scope.Species[Type].Population--;
+			delete AnimalInfo[ThisAnimalInfo.ID];
+		}
+		//var ThisAnimal = document.getElementById(AnimalID);
+		//angular.element(ThisAnimal).remove();
 	}
 
 	function showAnimalInfo(){
@@ -565,6 +564,7 @@ angular.module('myApp.projects.life.lifegame-directive', [])
 	scope.AddAnimal = AddAnimal;
 	scope.TogglePause = TogglePause;
 	scope.EditType = EditType;
+	scope.Animals = AnimalInfo;
 
   };
 }]);

@@ -76,3 +76,7 @@ h1{
   border:1px solid #000;
   overflow:hidden;
 }
+
+.gameArea div.animal{
+  position:absolute;
+}

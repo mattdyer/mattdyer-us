@@ -9,5 +9,9 @@
 	<div>
 
 	<button class="pauseButton" ng-click="TogglePause();">Pause</button>
-
+	<div class="gameArea">
+		<div ng-repeat="animal in Animals" id="{{animal.ID}}" class="animal" style="height:{{animal.Height}}px;width:{{animal.Width}}px;top:{{animal.Top}}px;left:{{animal.Left}}px; z-index:{{animal.Width}}">
+			<img src="{{animal.imageSrc}}" id="{{animal.ID}}Image" style="height:{{animal.Height}}px;width:{{animal.Width}}px;">
+		</div>
+	</div>
 </div>
