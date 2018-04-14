@@ -10,10 +10,9 @@
       "assets": [
         "assets",
         "favicon.ico",
-        "CNAME",
-        "404.html"
+        "CNAME"
       ],
-      "index": "index.html",
+      "index": "404.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
