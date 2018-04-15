@@ -1,13 +1,16 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <ul>
+<div>
+	<h1>
+		{{ title }}
+	</h1>
+	<ul class="menu">
 		<li><a routerLink="/" routerLinkActive="active">Home</a></li>
+		<li><a routerLink="/fishgame" routerLinkActive="active">Fish Game</a></li>
 		<li><a routerLink="/subpage" routerLinkActive="active">Subpage</a></li>
-		<li><a routerLink="/notfound" routerLinkActive="active">Not Found</a></li>
+		<li><a href="https://codebjournal.mattdyer.us" target="_blank">Code Blog</a></li>
 	</ul>
-  <router-outlet></router-outlet>
+	<div class="content">
+		<router-outlet></router-outlet>
+	</div>
 </div>
 
 
