@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-fishgame',
@@ -10,10 +10,13 @@ export class FishgameComponent implements OnInit {
 	@ViewChild("fish") fish: TemplateRef<any>;
 	@ViewChild("bug") bug: TemplateRef<any>;
 
+	private fishes = [];
+  	private bugs = [];
+  	private running = false;
+
   constructor() { 
 
-  	this.fishes = [];
-  	this.bugs = [];
+  	
 
   }
 
@@ -68,7 +71,7 @@ export class FishgameComponent implements OnInit {
 
   	this.fishes.push({
   		'view': view,
-  		'type': 'fish'
+  		'typeName': 'fish'
   	})
 
   	console.log(this.fishes);
@@ -82,7 +85,7 @@ export class FishgameComponent implements OnInit {
 
   	this.bugs.push({
   		'view': view,
-  		'type': 'bug'
+  		'typeName': 'bug'
   	})
 
   }
