@@ -34,16 +34,21 @@ export class FishgameComponent implements OnInit {
   	
   	console.log(time);
 
-  	var fish;
-  	var bug;
+  	for(var fish of this.fishes){
 
-  	for(var i in this.fishes){
-  		fish = this.fishes[i];
-  		console.log(fish);
+  		if(!fish.style){
+  			fish.style = fish.view._view.nodes[1].renderElement.style;
+  			fish.style.top = 0;
+  			fish.style.left = 0;
+  		}
+
+  		console.log(fish.style.top);
+
+  		fish.style.top = (parseInt(fish.style.top,10) + 1) + 'px';
+
   	}
 
-  	for(var i in this.bugs){
-  		bug = this.bugs[i];
+  	for(var bug of this.bugs){
   		console.log(bug);
   	}
 
@@ -69,10 +74,20 @@ export class FishgameComponent implements OnInit {
 
   	this.vc.insert(view);
 
+  	console.log(view);
+
+  	//let style = view._view.nodes[1].renderElement.style;
+
+  	//style.top = 0;
+  	//style.left = 0;
+
   	this.fishes.push({
   		'view': view,
-  		'typeName': 'fish'
-  	})
+  		'typeName': 'fish',
+  		'left':0,
+  		'top':0,
+  		'style': undefined
+  	});
 
   	console.log(this.fishes);
   }
@@ -85,7 +100,9 @@ export class FishgameComponent implements OnInit {
 
   	this.bugs.push({
   		'view': view,
-  		'typeName': 'bug'
+  		'typeName': 'bug',
+  		'left':0,
+  		'top':0
   	})
 
   }
