@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, TemplateRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, Type, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { FishComponent } from './animals/fish/fish.component';
+import { BugComponent } from './animals/bug/bug.component';
 
 @Component({
   selector: 'app-fishgame',
@@ -7,14 +9,16 @@ import { Component, OnInit, ViewChild, ViewContainerRef, TemplateRef } from '@an
 })
 export class FishgameComponent implements OnInit {
 	@ViewChild("vc", {read: ViewContainerRef}) vc: ViewContainerRef;
-	@ViewChild("fish") fish: TemplateRef<any>;
-	@ViewChild("bug") bug: TemplateRef<any>;
+	//@ViewChild("fish") fish: TemplateRef<any>;
+	//@ViewChild("bug") bug: TemplateRef<any>;
 
-	private fishes = [];
-  	private bugs = [];
+	private animals = [];
   	private running = false;
 
-  constructor() { 
+  	FishComponentClass = FishComponent;
+  	BugComponentClass = BugComponent;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) { 
 
   	
 
@@ -23,7 +27,7 @@ export class FishgameComponent implements OnInit {
   ngOnInit() {
 
   	console.log('init');
-  	window.requestAnimationFrame(this.animate.bind(this));
+  	//window.requestAnimationFrame(this.animate.bind(this));
 
   	this.running = false;
 
@@ -34,22 +38,18 @@ export class FishgameComponent implements OnInit {
   	
   	console.log(time);
 
-  	for(var fish of this.fishes){
+  	for(var animal of this.animals){
 
-  		if(!fish.style){
+  		/*if(!fish.style){
   			fish.style = fish.view._view.nodes[1].renderElement.style;
   			fish.style.top = 0;
   			fish.style.left = 0;
-  		}
+  		}*/
 
-  		console.log(fish.style.top);
+  		console.log(animal);
 
-  		fish.style.top = (parseInt(fish.style.top,10) + 1) + 'px';
+  		//fish.style.top = (parseInt(fish.style.top,10) + 1) + 'px';
 
-  	}
-
-  	for(var bug of this.bugs){
-  		console.log(bug);
   	}
 
   	if(this.running){
@@ -68,43 +68,31 @@ export class FishgameComponent implements OnInit {
   }
 
 
-  addFish(){
+  addFish(componentClass: Type<any>){
   	console.log('add fish');
-  	let view = this.fish.createEmbeddedView(null);
+  	
+  	this.addAnimal(componentClass,'fish');
 
-  	this.vc.insert(view);
-
-  	console.log(view);
-
-  	//let style = view._view.nodes[1].renderElement.style;
-
-  	//style.top = 0;
-  	//style.left = 0;
-
-  	this.fishes.push({
-  		'view': view,
-  		'typeName': 'fish',
-  		'left':0,
-  		'top':0,
-  		'style': undefined
-  	});
-
-  	console.log(this.fishes);
   }
 
-  addBug(){
+  addBug(componentClass: Type<any>){
   	console.log('add bug');
-  	let view = this.bug.createEmbeddedView(null);
 
-  	this.vc.insert(view);
+  	this.addAnimal(componentClass,'bug');
 
-  	this.bugs.push({
-  		'view': view,
-  		'typeName': 'bug',
+  }
+
+  addAnimal(componentClass: Type<any>, type){
+  	
+  	const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
+    const component = this.vc.createComponent(componentFactory);
+
+  	this.animals.push({
+  		'component': component,
+  		'typeName': type,
   		'left':0,
   		'top':0
   	})
-
   }
 
 }

@@ -8,6 +8,8 @@ import { HomeComponent } from './pages/home.component';
 import { SubpageComponent } from './pages/subpage.component';
 import { NotFoundComponent } from './pages/notfound.component';
 import { FishgameComponent } from './pages/fishgame/fishgame.component';
+import { FishComponent } from './pages/fishgame/animals/fish/fish.component';
+import { BugComponent } from './pages/fishgame/animals/bug/bug.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,7 +25,9 @@ const appRoutes: Routes = [
     HomeComponent,
     SubpageComponent,
     NotFoundComponent,
-    FishgameComponent
+    FishgameComponent,
+    FishComponent,
+    BugComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ const appRoutes: Routes = [
     )
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [FishComponent,BugComponent]
 })
 export class AppModule { }
