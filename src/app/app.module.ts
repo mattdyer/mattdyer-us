@@ -10,6 +10,7 @@ import { NotFoundComponent } from './pages/notfound.component';
 import { FishgameComponent } from './pages/fishgame/fishgame.component';
 import { FishComponent } from './pages/fishgame/animals/fish/fish.component';
 import { BugComponent } from './pages/fishgame/animals/bug/bug.component';
+import { AnimalComponent } from './pages/fishgame/animals/animal/animal.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
     NotFoundComponent,
     FishgameComponent,
     FishComponent,
-    BugComponent
+    BugComponent,
+    AnimalComponent
   ],
   imports: [
     BrowserModule,

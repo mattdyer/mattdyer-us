@@ -9,6 +9,7 @@ import { BugComponent } from './animals/bug/bug.component';
 })
 export class FishgameComponent implements OnInit {
 	@ViewChild("vc", {read: ViewContainerRef}) vc: ViewContainerRef;
+
 	//@ViewChild("fish") fish: TemplateRef<any>;
 	//@ViewChild("bug") bug: TemplateRef<any>;
 
@@ -46,7 +47,7 @@ export class FishgameComponent implements OnInit {
   			fish.style.left = 0;
   		}*/
 
-  		console.log(animal);
+  		console.log(animal.component.getStyle());
 
   		//fish.style.top = (parseInt(fish.style.top,10) + 1) + 'px';
 
@@ -87,8 +88,10 @@ export class FishgameComponent implements OnInit {
   	const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
     const component = this.vc.createComponent(componentFactory);
 
+    //console.log(this.vc);
+
   	this.animals.push({
-  		'component': component,
+  		'component': component.instance,
   		'typeName': type,
   		'left':0,
   		'top':0

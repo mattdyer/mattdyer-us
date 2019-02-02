@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { AnimalComponent } from '../animal/animal.component';
 
 @Component({
   selector: 'app-bug',
   templateUrl: './bug.component.html',
   styleUrls: ['./bug.component.css']
 })
-export class BugComponent implements OnInit {
+export class BugComponent extends AnimalComponent {
 
-  constructor() { }
+	private type = 'bug';
 
-  ngOnInit() {
+  constructor() {
+  	super();
   }
 
+  
 }

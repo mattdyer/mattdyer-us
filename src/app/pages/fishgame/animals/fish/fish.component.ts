@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { AnimalComponent } from '../animal/animal.component';
+
 
 @Component({
   selector: 'app-fish',
   templateUrl: './fish.component.html',
   styleUrls: ['./fish.component.css']
 })
-export class FishComponent implements OnInit {
+export class FishComponent extends AnimalComponent {
+	
 
-  constructor() { }
+	private type = 'fish';
 
-  ngOnInit() {
+  constructor() { 
+  	super();
   }
 
+  
 }
