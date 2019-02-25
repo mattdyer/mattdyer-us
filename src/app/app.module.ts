@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home.component';
@@ -11,6 +11,7 @@ import { FishgameComponent } from './pages/fishgame/fishgame.component';
 import { FishComponent } from './pages/fishgame/animals/fish/fish.component';
 import { BugComponent } from './pages/fishgame/animals/bug/bug.component';
 import { AnimalComponent } from './pages/fishgame/animals/animal/animal.component';
+import { SpeciesService } from './services/species.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,12 +34,13 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [SpeciesService],
   bootstrap: [AppComponent],
   entryComponents: [FishComponent,BugComponent]
 })

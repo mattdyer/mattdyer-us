@@ -14,10 +14,11 @@ export class FishgameComponent implements OnInit {
 	//@ViewChild("bug") bug: TemplateRef<any>;
 
 	private animals = [];
-  	private running = false;
+  private running = false;
+  private lastTime;
 
-  	FishComponentClass = FishComponent;
-  	BugComponentClass = BugComponent;
+  FishComponentClass = FishComponent;
+  BugComponentClass = BugComponent;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { 
 
@@ -37,30 +38,45 @@ export class FishgameComponent implements OnInit {
 
   animate(time){
   	
-  	console.log(time);
+    if(!this.lastTime){
+      this.lastTime = time;
+    }
+
+    var timeDifference = time - this.lastTime;
+
+  	//console.log(timeDifference);
 
   	for(var animal of this.animals){
 
-  		/*if(!fish.style){
-  			fish.style = fish.view._view.nodes[1].renderElement.style;
-  			fish.style.top = 0;
-  			fish.style.left = 0;
-  		}*/
 
-  		console.log(animal.component.getStyle());
-
-  		//fish.style.top = (parseInt(fish.style.top,10) + 1) + 'px';
+      animal.move(timeDifference, this.animals);
 
   	}
 
+    var cleanedAnimals = [];
+
+    for(var animal of this.animals){
+
+      if(!animal.isDead()){
+        cleanedAnimals.push(animal);
+      }
+
+    }
+
+    this.animals = cleanedAnimals;
+
   	if(this.running){
 	  	window.requestAnimationFrame(this.animate.bind(this));
-	}
+      this.lastTime = time;
+	 }
+
+
   }
 
 
   start(){
   	this.running = true;
+    this.lastTime = undefined;
   	window.requestAnimationFrame(this.animate.bind(this));
   }
 
@@ -72,30 +88,30 @@ export class FishgameComponent implements OnInit {
   addFish(componentClass: Type<any>){
   	console.log('add fish');
   	
-  	this.addAnimal(componentClass,'fish');
+  	this.addAnimal(componentClass);
 
   }
 
   addBug(componentClass: Type<any>){
   	console.log('add bug');
 
-  	this.addAnimal(componentClass,'bug');
+  	this.addAnimal(componentClass);
 
   }
 
-  addAnimal(componentClass: Type<any>, type){
+  addAnimal(componentClass: Type<any>){
   	
   	const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentClass);
     const component = this.vc.createComponent(componentFactory);
 
     //console.log(this.vc);
 
-  	this.animals.push({
-  		'component': component.instance,
-  		'typeName': type,
-  		'left':0,
-  		'top':0
-  	})
+    component.instance._ref = component;
+
+    component.instance.getStyle().top = 0;
+    component.instance.getStyle().left = 0;
+
+  	this.animals.push(component.instance);
   }
 
 }
