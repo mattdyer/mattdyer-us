@@ -43,8 +43,21 @@ export class AnimalComponent implements AfterViewInit {
     //console.log(time);
     
     if(this.species){
-      var newLeft = ((this.destination[0] - this.left) * (this.species.Speed * time)) + this.left;
-      var newTop = ((this.destination[1] - this.top) * (this.species.Speed * time)) + this.top;
+      
+      var newLeft = 0;
+      var newTop = 0;
+
+      let distanceToMove = this.species.Speed * time;
+
+      if(this.isAtDestination(distanceToMove)){
+        newLeft = this.destination[0];
+        newTop = this.destination[1];
+      }else{
+        
+        newLeft = ((this.destination[0] - this.left) * distanceToMove) + this.left;
+        newTop = ((this.destination[1] - this.top) * distanceToMove) + this.top;
+      }
+
 
       this.left = newLeft;
       this.top = newTop;
@@ -60,23 +73,65 @@ export class AnimalComponent implements AfterViewInit {
         //console.log(this.species.FoodType);
         //console.log(this.species.FoodType.indexOf(animal.getType()));
 
-        if(this.species.FoodType.indexOf(animal.getType()) >= 0){
-          this.destination = [animal.getLeft(),animal.getTop()];
+        var foodFound = false;
+        var predatorFound = false;
+        var closestFood = 2000;
 
-          if(Math.abs(animal.getLeft() - this.getLeft()) < this.tolerance && Math.abs(animal.getTop() - this.getTop()) < this.tolerance){
+        if(this.species.FoodType.indexOf(animal.getType()) >= 0){
+          
+          foodFound = true;
+
+          if(this.distanceToAnimal(animal) < closestFood){
+            this.destination = [animal.getLeft(),animal.getTop()];
+            closestFood = this.distanceToAnimal(animal);
+          }
+
+          if(this.targetIsInRange(animal)){
             animal.kill();
           }
 
         }
 
+
+
         if(this.species.PredatorType.indexOf(animal.getType()) >= 0){
-          this.destination = [this.getLeft() + 10,this.getTop() + 10];
+          predatorFound = true;
+
+          var distanceToPredator = this.distanceToAnimal(animal);
+
+
+          let newLeft = this.getLeft() - ((animal.getLeft() - this.getLeft()) * 10 / distanceToPredator);
+          let newTop = this.getTop() - ((animal.getTop() - this.getTop()) * 10 / distanceToPredator);
+
+          //console.log(newLeft);
+          //console.log(newTop);
+
+          //console.log(this.getLeft());
+          //console.log(this.getTop());
+
+          this.destination = [newLeft, newTop];
         }
 
+
+        
+
       }
+
+      if(!foodFound && !predatorFound){
+        if(this.isAtDestination(time)){
+          console.log('New Destination Chosen');
+          this.randomDestination();
+        }
+      }
+
     }
 
 
+  }
+
+  isAtDestination(distanceToMove){
+    
+    return this.distanceToDestination() < distanceToMove;
   }
 
   getStyle(){
@@ -110,6 +165,36 @@ export class AnimalComponent implements AfterViewInit {
 
   isDead(){
     return this.dead;
+  }
+
+  randomDestination(){
+
+    var randomLeft = (Math.random() * 1000);
+    var randomTop = (Math.random() * 400);
+
+    var newDestination = [randomLeft, randomTop];
+
+    //var newDestination = [Math.max(this.destination[0] + randomLeft, 0), Math.max(this.destination[1] + randomTop, 0)];
+
+    this.destination = newDestination;
+  }
+
+  distanceToPoint(left, top){
+    var distance = Math.sqrt(Math.pow(this.getLeft() - left,2) + Math.pow(this.getTop() - top,2));
+    //console.log(distance);
+    return distance;
+  }
+
+  distanceToDestination(){
+    return this.distanceToPoint(this.destination[0], this.destination[1]);
+  }
+
+  distanceToAnimal(animal){
+    return this.distanceToPoint(animal.getLeft(), animal.getTop());
+  }
+
+  targetIsInRange(animal){
+    return this.distanceToPoint(animal.getLeft(), animal.getTop()) < this.tolerance;
   }
 
 }
