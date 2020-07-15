@@ -1,0 +1,42 @@
+body{
+	font-family: Arial, Helvetica, sans serif;
+	margin:0;
+}
+
+a{
+	text-decoration: none;
+	color: #000088;
+}
+
+a:hover{
+	background-color: #BBCCDD;
+}
+
+header{
+	background-image: url(/assets/bg2.jpg);
+	padding-top: 215px;
+}
+
+nav{
+	display: grid;
+	grid-auto-columns: 1fr;
+	background-color: #AABBCC;
+}
+
+nav a{
+	grid-row: 1;
+	text-align: center;
+	padding: 20px 0;
+	font-weight: bold;
+}
+
+
+article{
+	padding: 10px 50px;
+	background-color: #F5F5DC;
+}
+
+footer{
+	padding: 10px 50px;
+	background-color: #AABBCC
+}
