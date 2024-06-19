@@ -59,10 +59,15 @@
 			margin: 1rem;
 			padding: 1rem;
 			border-top: 2px solid #222;
-			display: flex;
+			display: grid;
+			grid-template-columns: 12rem 1fr;
 		}
 
 		.skills{
+			margin: 1rem;
+			padding: 1rem;
+			border-top: 2px solid #222;
+			display: flex;
 			padding: 0 4rem;
 			margin-bottom: 5rem;
 		}
@@ -75,8 +80,13 @@
 		.section-title{
 			margin-left: 2rem;
 			margin-right: 1rem;
-			width: 25%;
+			width: 6rem;
 			white-space: nowrap;
+			flex: 1 1 auto;
+		}
+
+		.section-content{
+			padding: 0 0.5rem;
 		}
 
 		.about-me-content{
@@ -84,7 +94,7 @@
 		}
 
 		.experience-item{
-			padding: 0.5rem;
+			padding: 0.5rem 0;
 		}
 
 		.experience-item-header{
@@ -113,18 +123,16 @@
 		</div>
 		<div class="main-section about-me">
 			<h1 class="section-title">About Me</h1>
-			<div>
-				<div class="about-me-content">
-					I have worked as a developer for over eighteen years.  Through all of that time I have contiued to learn
-					and keep pace with the current state of the industry.  I have had various responsibilities
-					including development, server management, team management, and client relations.  I have handled all of these
-					chalenges, but what I enjoy most is the development work.
-				</div>
+			<div class="section-content">
+				I have worked as a developer for over eighteen years.  Through all of that time I have contiued to learn
+				and keep pace with the current state of the industry.  I have had various responsibilities
+				including development, server management, team management, and client relations.  I have handled all of these
+				challenges, but what I enjoy most is the development work.
 			</div>
 		</div>
 		<div class="main-section experience">
 			<h1 class="section-title">Experience</h1>
-			<div>
+			<div class="section-content">
 				<div class="experience-item">
 					<div class="experience-item-header">Electronic Tenant Solutions (Inhabit) 2012 - Present</div>
 					<div class="experience-title">
@@ -163,13 +171,13 @@
 		</div>
 		<div class="main-section education">
 			<h1 class="section-title">Education</h1>
-			<div>
+			<div class="section-content">
 				<div>Flathead High School - Kalispell, MT </div>
 
 				<div>Montana State University - Bozeman, MT</div>
 			</div>
 		</div>
-		<div class="main-section skills">
+		<div class="skills-section skills">
 			<div class="column">
 				<h1>Skills</h1>
 				<ul>
@@ -188,7 +196,15 @@
 				<h1>Languages</h1>
 				<ul>
 					<li>Coldfusion</li>
-					<li>Javascript</li>
+					<li>
+						Javascript
+						<ul>
+							<li>jQuery</li>
+							<li>React</li>
+							<li>Angular</li>
+						</ul>
+					</li>
+					<li>Java</li>
 					<li>SQL</li>
 					<li>PHP</li>
 					<li>Python</li>
